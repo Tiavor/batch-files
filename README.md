@@ -6,5 +6,5 @@ play-videos.bat
   adds played video to a history file
   when playlist is empty, searches for new files
 
-create random bat.bat
+create random.bat
   creates a shortcut to play-videos.bat on desktop to a random subfolder
