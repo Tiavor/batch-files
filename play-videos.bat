@@ -8,6 +8,7 @@ REM summary of previous updates:
 REM    removed "setlocal enabledelayedexpansion" as it doesn't with if the path/file includes exclamation mark(s)
 REM    findstr doesn't work with subfolders. when -sub is activated, the full path is lsited and backslash is an escape character for findstr
 REM    added subfolder search as command line parameter option
+REM    automaticalls removes entries from watched.txt when files are not present anymore
 
 @echo off
 
@@ -34,6 +35,7 @@ REM sorting the result in case file formats are mixed
 sort temp.txt > list.txt
 del temp.txt
 
+
 REM if exists watched.txt compare with list.txt
 REM    put not matching entries in next.txt
 if exist list.txt (
@@ -43,19 +45,24 @@ if exist list.txt (
 		REM if not exist next.txt echo.> next.txt
 		REM note: removed findstr because it doesn't work with complete paths as backslash is an escape char
 		for /f "tokens=*" %%f in (watched.txt) do (
-			echo filtering "%%f"
-			echo @echo off>> sort.bat
-			echo for /f "tokens=*" %%%%d in ^(list.txt^) do ^(>> sort.bat
-			echo if not "%%%%d"=="%%f" ^(>> sort.bat
-			echo echo %%%%d^>^> list2.txt>> sort.bat
-			echo ^)>> sort.bat
-			echo ^)>> sort.bat 
-			echo del list.txt>> sort.bat
-			echo ren list2.txt list.txt>> sort.bat
-			call sort.bat
-			del sort.bat
+			if exist %%f (
+				echo %%f>> watched2.txt
+				echo filtering "%%f"
+				echo @echo off> sort.bat
+				echo for /f "tokens=*" %%%%d in ^(list.txt^) do ^(>> sort.bat
+				echo if not "%%%%d"=="%%f" ^(>> sort.bat
+				echo echo %%%%d^>^> list2.txt>> sort.bat
+				echo ^)>> sort.bat
+				echo ^)>> sort.bat 
+				echo del list.txt>> sort.bat
+				echo ren list2.txt list.txt>> sort.bat
+				call sort.bat
+			)
 		)
+		del watched.txt
+		ren watched2.txt watched.txt
 		echo filter complete
+		del sort.bat
 	)
 )
 ren list.txt next.txt
