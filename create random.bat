@@ -1,4 +1,4 @@
-REM this file creates a shortcut to the play-videos.bat file onto the desktop
+REM this file creates a shortcut to the play-next.bat file onto the desktop
 REM and sets a random subfolder as target and name of the shortcut
 
 @echo off
@@ -51,7 +51,7 @@ echo %SCRIPT%
 echo Set oWS = WScript.CreateObject("WScript.Shell")>> %SCRIPT%
 echo sLinkFile = "%USERPROFILE%\Desktop\%folder%.lnk">> %SCRIPT%
 echo Set oLink = oWS.CreateShortcut(sLinkFile)>> %SCRIPT%
-echo oLink.TargetPath = "%CD%\play-videos.bat">> %SCRIPT%
+echo oLink.TargetPath = "%CD%\play-next.bat">> %SCRIPT%
 echo oLink.Arguments = "-sub">> %SCRIPT%
 echo oLink.WorkingDirectory = "%path%">> %SCRIPT%
 echo oLink.Save>> %SCRIPT%
