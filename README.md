@@ -1,6 +1,6 @@
 # batch-files
 
-### play-videos.bat<br>
+### play-next.bat<br>
 * creates a list of videos inside a folder
 * plays the first video in that list
 * adds played video to a history file
